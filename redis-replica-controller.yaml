@@ -1,0 +1,31 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: redis-replica
+  labels:
+    app: redis-master
+    role: replica
+spec:
+  replicas: 2
+  selector:
+    app: redis-master
+    role: replica
+  template:
+    metadata:
+      labels:
+        app: redis-master
+        role: replica
+    spec:
+      containers:
+        - name: redis-replica
+          image: redis:7.2
+          ports:
+            - name: redis-server
+              containerPort: 6379
+          command:
+            - redis-server
+            - "--port"
+            - "6379"
+            - "--replicaof"
+            - "redis-master"
+            - "6379"

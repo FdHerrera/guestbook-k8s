@@ -1,0 +1,20 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-replica
+  namespace: default
+  labels:
+    app: redis-master
+    role: replica
+spec:
+  selector:
+    app: redis-master
+    role: replica
+  ports:
+  - name: redis-replica
+    protocol: TCP
+    port: 6379
+    targetPort: redis-server
+---
+

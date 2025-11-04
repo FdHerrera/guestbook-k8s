@@ -1,0 +1,29 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guestbook
+  namespace: default
+  labels:
+    app: guestbook
+spec:
+  selector:
+    matchLabels:
+      app: guestbook
+  replicas: 3
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container:  guestbook
+      labels:
+        app: guestbook
+    spec:
+      containers:
+      - name: guestbook
+        image: registry.k8s.io/guestbook:v3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+          name: http-server
+---
+

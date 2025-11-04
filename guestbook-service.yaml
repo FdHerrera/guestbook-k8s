@@ -1,0 +1,19 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook
+  namespace: default
+  labels:
+    app: guestbook
+spec:
+  selector:
+    app: guestbook
+  type: LoadBalancer
+  ports:
+  - name: guestbook
+    protocol: TCP
+    port: 3000
+    targetPort: http-server
+---
+
